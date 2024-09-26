@@ -4,7 +4,6 @@ Created on Wed Sep 25 11:07:25 2024
 
 @author: Yahia
 """
-
 import cv2
 import os
 import numpy as np
@@ -20,7 +19,8 @@ import cv2 as cv
 import matplotlib.pyplot as plt
 symbols_folder = 'High-res'
 img2 = cv.imread('High-res-test.png',cv.IMREAD_GRAYSCALE) # trainImage
- 
+# img2 = cv.imread('High-res-test2.jpg',cv.IMREAD_GRAYSCALE) # trainImage
+
 symbols = []
 for file_name in os.listdir(symbols_folder):
     file_path = os.path.join(symbols_folder, file_name)
@@ -35,12 +35,12 @@ for (file_name, symbol_image) in symbols:
     sift = cv.SIFT_create()
      
     # find the keypoints and descriptors with SIFT
-    kp1, des1 = sift.detectAndCompute(img1,None)
-    kp2, des2 = sift.detectAndCompute(img2,None)
+    kp1, des1 = sift.detectAndCompute(img1, None)
+    kp2, des2 = sift.detectAndCompute(img2, None)
      
     # BFMatcher with default params
     bf = cv.BFMatcher()
-    matches = bf.knnMatch(des1,des2,k=2)
+    matches = bf.knnMatch(des1, des2, k=2)
      
     # Apply ratio test
     good = []
@@ -69,7 +69,8 @@ import matplotlib.pyplot as plt
 # img1 = cv.imread(r'.\\Maker Marks\\image_125.jpg',cv.IMREAD_GRAYSCALE)          # queryImage
 symbols_folder = 'High-res'
 img2 = cv.imread('High-res-test.png',cv.IMREAD_GRAYSCALE) # trainImage
- 
+# img2 = cv.imread('High-res-test2.jpg',cv.IMREAD_GRAYSCALE) # trainImage
+
 symbols = []
 for file_name in os.listdir(symbols_folder):
     file_path = os.path.join(symbols_folder, file_name)
@@ -102,11 +103,6 @@ for (file_name, symbol_image) in symbols:
     for i,(m,n) in enumerate(matches):
         if m.distance < 0.5*n.distance:
             matchesMask[i]=[1,0]
-            print(m.distance/n.distance)
-            # fig, axs = plt.subplots(2)
-            # axs[0].imshow(img1)
-            # axs[1].imshow(img2)
-            # plt.show()
     
     draw_params = dict(matchColor = (0,255,0),
                         singlePointColor = (255,0,0),
